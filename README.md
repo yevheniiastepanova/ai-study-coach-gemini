@@ -22,9 +22,9 @@ This project demonstrates clean UI design, responsive layout, safe API usage, an
 
 ### Chat Interface (Gemini)
 
-<img src="./src/assets/projects/ai-chat-assistant-gemini/ai-chat-assistant-gemini1.png" width="420" />
-<img src="./src/assets/projects/ai-chat-assistant-gemini/ai-chat-assistant-gemini2.png" width="420" />
-<img src="./src/assets/projects/ai-chat-assistant-gemini/ai-chat-assistant-gemini3.png" width="420" />
+<img src="./src/assets/screenshots/ai-chat-assistant-gemini1.png" width="420" />
+<img src="./src/assets/screenshots/ai-chat-assistant-gemini2.png" width="420" />
+<img src="./src/assets/screenshots/ai-chat-assistant-gemini3.png" width="420" />
 
 ---
 
