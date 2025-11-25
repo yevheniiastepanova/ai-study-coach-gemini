@@ -1,16 +1,62 @@
-# React + Vite
+# 🧠 AI Study Coach (Gemini)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive AI-powered study coach built using **Google Gemini API** and **React + Vite**.  
+The assistant helps students learn, explains academic topics, answers questions, and provides personalized study support in real time.
 
-Currently, two official plugins are available:
+This project demonstrates clean UI design, responsive layout, safe API usage, and modern frontend architecture — suitable for a professional portfolio.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🚀 Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 📚 **AI-Powered Study Assistant** — answers questions and explains topics in an easy-to-understand way  
+- 💬 **Real-time chat interface** with a modern glassmorphism UI  
+- 📱 **Fully responsive design** (iPhone / iPad / desktop friendly)  
+- ⚡ **Fast and smooth performance** powered by Vite  
+- 🎨 **Beautiful Glass UI** with animations and typing indicator  
+- 🔒 **Secure API architecture** (API key stored in local `.env`, not pushed to GitHub)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🖼️ Screenshots
+
+### Chat Interface (Gemini)
+
+<img src="./src/assets/projects/ai-chat-assistant-gemini/ai-chat-assistant-gemini1.png" width="420" />
+<img src="./src/assets/projects/ai-chat-assistant-gemini/ai-chat-assistant-gemini2.png" width="420" />
+<img src="./src/assets/projects/ai-chat-assistant-gemini/ai-chat-assistant-gemini3.png" width="420" />
+
+---
+
+## 🛠️ Tech Stack
+
+- **React 18**
+- **Vite**
+- **Google Gemini API**
+- **CSS Glassmorphism UI**
+- **Bootstrap Icons**
+- **JavaScript (ES2023)**
+
+---
+
+## 🧩 How It Works
+
+1. The user types a question in the chat  
+2. The message is passed to a secure backend endpoint (or mock handler in demo mode)  
+3. Gemini processes the prompt and generates a study-related response  
+4. The AI's answer appears in the chat UI along with the timestamp  
+5. The interface auto-scrolls and animates messages using smooth transitions
+
+---
+
+## 📦 Installation & Setup
+
+```bash
+# Clone the repo
+git clone https://github.com/yevheniiastepanova/ai-study-coach-gemini.git
+
+# Move into the project folder
+cd ai-study-coach-gemini
+
+# Install dependencies
+npm install
