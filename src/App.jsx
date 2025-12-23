@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { GoogleGenAI } from "@google/genai";
 import "./App.css";
 
 // ---------- SUBJECTS (режимы-туторы) ----------
@@ -34,15 +33,10 @@ function formatTime(date) {
   return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 }
 
-// ---------- КЛИЕНТ GEMINI (GENAI SDK) ----------
-const genAI = new GoogleGenAI({
-  apiKey: import.meta.env.VITE_GEMINI_API_KEY,
-});
-
 export default function App() {
-  const [mode, setMode] = useState(null);       // выбранный предмет
-  const [messages, setMessages] = useState([]); // история чата
-  const [input, setInput] = useState("");       // текст в textarea
+  const [mode, setMode] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
   // =============== SEND MESSAGE =============== //
@@ -62,31 +56,24 @@ export default function App() {
     setLoading(true);
 
     try {
-      const systemPrompt = SUBJECTS.find((s) => s.id === mode)?.prompt || "";
+      const systemPrompt =
+        SUBJECTS.find((s) => s.id === mode)?.prompt || "";
 
-      // Собираем контекст для модели
-      const chatMessages = [
-        {
-          role: "user",
-          parts: [{ text: `Instruction: ${systemPrompt}` }],
-        },
-        ...messages.map((msg) => ({
-          role: msg.role,
-          parts: [{ text: msg.content }],
-        })),
-        {
-          role: "user",
-          parts: [{ text: trimmed }],
-        },
-      ];
-
-      // ВАЖНО: используем актуальную модель gemini-2.0-flash
-      const response = await genAI.models.generateContent({
-        model: "gemini-2.0-flash",
-        contents: chatMessages,
+      // 🔒 ВСЕГДА через backend
+      const res = await fetch("/api/gemini", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          prompt: `Instruction: ${systemPrompt}\n\nUser: ${trimmed}`,
+        }),
       });
 
-      const reply = response.text;
+      if (!res.ok) {
+        throw new Error("API request failed");
+      }
+
+      const data = await res.json();
+      const reply = data.text;
 
       const aiMessage = {
         id: Date.now() + 1,
@@ -174,7 +161,6 @@ export default function App() {
 
       <div className="container py-4 d-flex justify-content-center">
         <div className="chat-shell">
-
           <div className="chat-header d-flex justify-content-between align-items-center mb-3">
             <button
               type="button"
@@ -265,7 +251,6 @@ export default function App() {
               Clear chat
             </button>
           </div>
-
         </div>
       </div>
     </div>
