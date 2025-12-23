@@ -1,6 +1,6 @@
 // api/gemini.js
 
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -14,30 +14,31 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Prompt is required" });
     }
 
-    // ✅ ЯВНАЯ проверка ключа (очень важно для логов)
     if (!process.env.GEMINI_API_KEY) {
       return res.status(500).json({
-        error: "GEMINI_API_KEY is missing in environment variables",
+        error: "GEMINI_API_KEY is missing",
       });
     }
 
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
-    // ✅ ЕДИНСТВЕННО ПРАВИЛЬНАЯ МОДЕЛЬ ДЛЯ SDK 0.24.x
-    const model = genAI.getGenerativeModel({
-      model: "models/gemini-1.5-flash-latest",
+    const genAI = new GoogleGenAI({
+      apiKey: process.env.GEMINI_API_KEY,
     });
 
-    const result = await model.generateContent(prompt);
-    const text = result.response.text();
+    // ✅ АКТУАЛЬНАЯ МОДЕЛЬ (работает)
+    const response = await genAI.models.generateContent({
+      model: "gemini-2.0-flash",
+      contents: prompt,
+    });
 
-    return res.status(200).json({ text });
+    return res.status(200).json({
+      text: response.text,
+    });
   } catch (error) {
     console.error("Gemini API error:", error);
 
-    // ✅ возвращаем реальное сообщение ошибки (для дебага)
     return res.status(500).json({
       error: error.message || "Gemini request failed",
     });
   }
 }
+
