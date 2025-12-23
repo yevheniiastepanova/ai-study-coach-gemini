@@ -14,24 +14,30 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Prompt is required" });
     }
 
+    // ✅ ЯВНАЯ проверка ключа (очень важно для логов)
+    if (!process.env.GEMINI_API_KEY) {
+      return res.status(500).json({
+        error: "GEMINI_API_KEY is missing in environment variables",
+      });
+    }
+
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-  
+    // ✅ ЕДИНСТВЕННО ПРАВИЛЬНАЯ МОДЕЛЬ ДЛЯ SDK 0.24.x
     const model = genAI.getGenerativeModel({
-     model: "models/gemini-1.5-flash-latest",
+      model: "models/gemini-1.5-flash-latest",
     });
 
     const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+    const text = result.response.text();
 
     return res.status(200).json({ text });
   } catch (error) {
     console.error("Gemini API error:", error);
 
+    // ✅ возвращаем реальное сообщение ошибки (для дебага)
     return res.status(500).json({
-      error: "Gemini request failed",
+      error: error.message || "Gemini request failed",
     });
   }
 }
-
